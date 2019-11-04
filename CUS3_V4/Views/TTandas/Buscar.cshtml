@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CUS3_V4.Models.TTanda>
+
+@{
+    ViewData["Title"] = "Buscar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CALIFICAR</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tanda
+            </th>
+            <th>
+                Modalidad
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Categoria
+            </th>
+            <th>
+                Tipo Tanda
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VtDescripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VtDescripcion1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItGanador)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VtTipoTanda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItEstado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DtFechaHora)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.PkItCodTan">Edit</a> |*@
+                    @*<a asp-action="Details" asp-route-id="@item.PkItCodTan">Details</a> |*@
+                    @*<a asp-action="Delete" asp-route-id="@item.PkItCodTan">Delete</a>*@
+                    <a asp-action="BuscarT" asp-route-id="@item.PkItCodTan" class="btn btn-block btn-info glyphicon glyphicon-check">Calificar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/js/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#SearchBtn").click(function () {
+            var SearchValue = $("#id").val();
+            var SetData = $("#DataSearching");
+            SetData.html("");
+            $.ajax({
+                type: "post",
+                url: "/TTandas/Buscar1?SearchValue=" + SearchValue + "",
+                contentType:"html",
+                success=function (result) {
+
+                }
+            })
+        });
+
+    }
+    );
+</script>
