@@ -25,29 +25,11 @@ namespace CUS3_V4.Controllers
             return View(await dB_A4F05E_SGIAMTPContext.ToListAsync());
         }
 
-        // GET: TPuntajes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tPuntaje = await _context.TPuntaje
-                .Include(t => t.FkVumtCodNavigation)
-                .FirstOrDefaultAsync(m => m.PkIpCodP == id);
-            if (tPuntaje == null)
-            {
-                return NotFound();
-            }
-
-            return View(tPuntaje);
-        }
 
         // GET: TPuntajes/Create
-        public IActionResult Create()
+        public IActionResult Create(int idt)
         {
-            @ViewBag.tanda = TempData["idt"];
+            ViewData["tanda"] = idt;
             @ViewBag.tipo = TempData["desc"];
             @ViewBag.cat = TempData["desc1"];
             ViewData["FkVumtCod"] = new SelectList(_context.TUsuarioModalidadTanda, "PkVumtCod", "PkVumtCod");
@@ -71,92 +53,26 @@ namespace CUS3_V4.Controllers
             return View(tPuntaje);
         }
 
-        // GET: TPuntajes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tPuntaje = await _context.TPuntaje.FindAsync(id);
-            if (tPuntaje == null)
-            {
-                return NotFound();
-            }
-            ViewData["FkVumtCod"] = new SelectList(_context.TUsuarioModalidadTanda, "PkVumtCod", "PkVumtCod", tPuntaje.FkVumtCod);
-            return View(tPuntaje);
-        }
-
-        // POST: TPuntajes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PkIpCodP,IpPuntaje,IpNumeroJurado,FkVumtCod")] TPuntaje tPuntaje)
-        {
-            if (id != tPuntaje.PkIpCodP)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tPuntaje);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TPuntajeExists(tPuntaje.PkIpCodP))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["FkVumtCod"] = new SelectList(_context.TUsuarioModalidadTanda, "PkVumtCod", "PkVumtCod", tPuntaje.FkVumtCod);
-            return View(tPuntaje);
-        }
-
-        // GET: TPuntajes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tPuntaje = await _context.TPuntaje
-                .Include(t => t.FkVumtCodNavigation)
-                .FirstOrDefaultAsync(m => m.PkIpCodP == id);
-            if (tPuntaje == null)
-            {
-                return NotFound();
-            }
-
-            return View(tPuntaje);
-        }
-
-        // POST: TPuntajes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var tPuntaje = await _context.TPuntaje.FindAsync(id);
-            _context.TPuntaje.Remove(tPuntaje);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool TPuntajeExists(int id)
         {
             return _context.TPuntaje.Any(e => e.PkIpCodP == id);
+        }
+        [HttpGet]
+        public IActionResult GetParticipante(int codt)
+        {
+
+            var codigoPart = (from c in _context.TUsuarioModalidadTanda
+                                  where (c.FkIumtCodTan == codt) && (c.IumtEstado==1)
+                                  select new Participante()
+                                  {
+                                      Codigo = c.FkIumtCodPart
+                                  }).ToList();
+
+            return Json(new { ParticipanteLista = codigoPart });
+        }
+        public class Participante
+        {
+            public int Codigo { get; set; }
         }
     }
 }

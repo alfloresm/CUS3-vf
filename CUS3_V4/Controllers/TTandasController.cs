@@ -17,6 +17,49 @@ namespace CUS3_V4.Controllers
         {
             _context = context;
         }
+        [HttpGet]
+        public IActionResult GetComboBox()
+        {
+
+            var tandaa = _context.TTanda.ToList();
+
+
+            return Json(new { tand = tandaa });
+        }
+        [HttpGet]
+        public IActionResult MostrarTanda(int idtanda, string des, string des1)
+        {
+            var puntaje = _context.TPuntaje.ToList();
+            var user_modalidad = _context.TUsuarioModalidadTanda.ToList();
+            var tanda = _context.TTanda.ToList();
+            var mpuntajes = from ta in tanda
+                            //join tum in user_modalidad on p.FkVumtCod equals tum.PkVumtCod
+                            //join ta in tanda on tum.FkIumtCodTan equals ta.PkItCodTan
+
+                            select new MostrarTanda
+                            {
+                                idTanda = ta.PkItCodTan,
+                                Categoria = ta.VtDescripcion1,
+                                Modalidad = ta.VtDescripcion,
+                                Tipo_tanda = ta.VtTipoTanda,
+                                estado=ta.ItEstado
+                            };
+            var model = mpuntajes.GroupBy(test => test.idTanda)
+                                     .Select(grp => grp.First())
+                                     .ToList();
+            var result = (from pu in model
+                          where (idtanda == 0 ? true : pu.idTanda == idtanda)
+                          select new MostrarTanda
+                          {
+                              idTanda = pu.idTanda,
+                              Categoria = pu.Categoria,
+                              Modalidad = pu.Modalidad,
+                              Tipo_tanda = pu.Tipo_tanda,
+                              estado=pu.estado
+                          }
+                           ).ToList();
+            return Json(new { punta = result });
+        }
 
         // GET: TTandas
         public async Task<IActionResult> Index()
@@ -24,24 +67,7 @@ namespace CUS3_V4.Controllers
             return View(await _context.TTanda.ToListAsync());
         }
 
-        // GET: TTandas/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tTanda = await _context.TTanda
-                .FirstOrDefaultAsync(m => m.PkItCodTan == id);
-            if (tTanda == null)
-            {
-                return NotFound();
-            }
-
-            return View(tTanda);
-        }
-
+       
         // GET: TTandas/Create
         public IActionResult Create()
         {
@@ -63,86 +89,10 @@ namespace CUS3_V4.Controllers
             }
             return View(tTanda);
         }
-
-        // GET: TTandas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tTanda = await _context.TTanda.FindAsync(id);
-            if (tTanda == null)
-            {
-                return NotFound();
-            }
-            return View(tTanda);
-        }
-
         // POST: TTandas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PkItCodTan,VtDescripcion,VtDescripcion1,ItGanador,VtTipoTanda,ItEstado,DtFechaHora")] TTanda tTanda)
-        {
-            if (id != tTanda.PkItCodTan)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tTanda);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TTandaExists(tTanda.PkItCodTan))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tTanda);
-        }
-
-        // GET: TTandas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tTanda = await _context.TTanda
-                .FirstOrDefaultAsync(m => m.PkItCodTan == id);
-            if (tTanda == null)
-            {
-                return NotFound();
-            }
-
-            return View(tTanda);
-        }
-
-        // POST: TTandas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var tTanda = await _context.TTanda.FindAsync(id);
-            _context.TTanda.Remove(tTanda);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool TTandaExists(int id)
         {
@@ -177,5 +127,13 @@ namespace CUS3_V4.Controllers
             //tTanda
             return RedirectToAction("Create", "TPuntajes");
         }
+    }
+    public class MostrarTanda
+    {
+        public int idTanda { get; set; }
+        public string Modalidad { get; set; }
+        public string Categoria { get; set; }
+        public string Tipo_tanda { get; set; }
+        public int? estado { get; set; }
     }
 }
