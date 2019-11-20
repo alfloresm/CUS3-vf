@@ -117,3 +117,4 @@ C:\Users\alumno.LABORATORIOS\source\CUS3-vf\CUS3_V4\obj\Debug\netcoreapp2.1\CUS3
 C:\Users\alumno.LABORATORIOS\source\CUS3-vf\CUS3_V4\obj\Debug\netcoreapp2.1\CUS3_V4.dll
 C:\Users\alumno.LABORATORIOS\source\CUS3-vf\CUS3_V4\obj\Debug\netcoreapp2.1\CUS3_V4.pdb
 C:\Users\alumno.LABORATORIOS\source\CUS3-vf\CUS3_V4\obj\Debug\netcoreapp2.1\CUS3_V4.csproj.CopyComplete
+C:\Users\Alexandra\Source\CUS3-vf\CUS3_V4\obj\Debug\netcoreapp2.1\CUS3_V4.csprojAssemblyReference.cache

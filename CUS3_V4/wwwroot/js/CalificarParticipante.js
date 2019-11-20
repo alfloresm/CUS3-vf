@@ -3,6 +3,8 @@ $(document).ready(function () {
     //$("#codt").text(localStorage.getItem("ct"));
     //$("#categoria").text(localStorage.getItem("cat"));
     //$("#modalidad").text(localStorage.getItem("mod"));
+    getModalidad();
+    getCategoria();
     getListaParticipante();
    
         $('#selectParticipante').on('change', function () {
@@ -47,3 +49,55 @@ var concatenar = function () {
     var codt = document.getElementById('codt').value;
     var codtp = codp + codt;
 }
+var getModalidad = function () {
+
+    var codt = document.getElementById('codt').value;
+    console.log(codt, ' codt');
+
+    $.ajax({
+        url: "/TPuntajes/GetModalidad",
+        type: "GET",
+        data: { codt: codt },
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+
+            var selectModalidad = $('#modalidad');
+
+            selectModalidad.find('option').remove();
+            
+            var listatemporal = response.modalidadLista;
+            $.each(listatemporal, function (key, value) { //temp es la lista que va recorrer 
+                selectModalidad.append('<option value=' + value.nombrem + '>' + value.nombrem + '</option>');
+            });
+        },
+        error: function (response) {
+            console.log(codt)
+        }
+    });
+};
+var getCategoria = function () {
+
+    var codt = document.getElementById('codt').value;
+    console.log(codt, ' codt');
+
+    $.ajax({
+        url: "/TPuntajes/GetCategoria",
+        type: "GET",
+        data: { codt: codt },
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+
+            var selectCategoria = $('#categoria');
+
+            selectCategoria.find('option').remove();
+
+            var listatemporal = response.categoriaLista;
+            $.each(listatemporal, function (key, value) { //temp es la lista que va recorrer 
+                selectCategoria.append('<option value=' + value.nombrec + '>' + value.nombrec + '</option>');
+            });
+        },
+        error: function (response) {
+            console.log(codt)
+        }
+    });
+};
