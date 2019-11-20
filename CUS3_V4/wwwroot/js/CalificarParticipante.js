@@ -12,6 +12,7 @@ $(document).ready(function () {
             var codt = document.getElementById('codt').value;
             var codtp = a + codt;
             $("#codtp").val(codtp);
+            $("#partTan").val(codtp);
         })
 });
 var getListaParticipante = function () {

@@ -30,8 +30,10 @@ namespace CUS3_V4.Controllers
         public IActionResult Create(int idt)
         {
             ViewData["tanda"] = idt;
-            @ViewBag.tipo = TempData["desc"];
-            @ViewBag.cat = TempData["desc1"];
+
+            
+            //@ViewBag.tipo = TempData["desc"];
+            //@ViewBag.cat = TempData["desc1"];
             ViewData["FkVumtCod"] = new SelectList(_context.TUsuarioModalidadTanda, "PkVumtCod", "PkVumtCod");
             return View();
         }
@@ -70,9 +72,42 @@ namespace CUS3_V4.Controllers
 
             return Json(new { ParticipanteLista = codigoPart });
         }
+        public IActionResult GetModalidad(int codt)
+        {
+            var mod = (from m in _context.TTanda
+                       where (m.PkItCodTan == codt)
+                       select new Modalidad()
+                       {
+                           nombrem=m.VtDescripcion
+                       }
+                       ).ToList();
+            
+            return Json(new { modalidadLista = mod });
+        }
+        public IActionResult GetCategoria(int codt)
+        {
+
+            var cat = (from m in _context.TTanda
+                       where (m.PkItCodTan == codt)
+                       select new Categoria()
+                       {
+                           nombrec = m.VtDescripcion1
+                       }
+                       ).ToList();
+
+            return Json(new { categoriaLista = cat });
+        }
         public class Participante
         {
             public int Codigo { get; set; }
+        }
+        public class Modalidad
+        {
+            public string nombrem { get; set; }
+        }
+        public class Categoria
+        {
+            public string nombrec { get; set; }
         }
     }
 }
