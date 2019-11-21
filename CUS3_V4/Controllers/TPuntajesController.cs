@@ -29,7 +29,7 @@ namespace CUS3_V4.Controllers
         // GET: TPuntajes/Create
         public IActionResult Create(int idt)
         {
-            ViewData["tanda"] = idt;
+            TempData["tanda"] = idt;
 
             
             //@ViewBag.tipo = TempData["desc"];
@@ -47,9 +47,11 @@ namespace CUS3_V4.Controllers
         {
             if (ModelState.IsValid)
             {
+                int v =Convert.ToInt16(TempData["tanda"]);
                 _context.Add(tPuntaje);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create","TPuntajes", new { idt = v });
+                //return Redirect("");
             }
             ViewData["FkVumtCod"] = new SelectList(_context.TUsuarioModalidadTanda, "PkVumtCod", "PkVumtCod", tPuntaje.FkVumtCod);
             return View(tPuntaje);
