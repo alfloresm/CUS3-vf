@@ -71,7 +71,7 @@
             <div class="modal-body">
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    
+                    <input id="codtA" value="@TempData["tanda"]" class="form-control col-lg-6 col-md-6 col-xs-6" disabled />
                     <div class="form-group">
                         <label asp-for="IpNumeroJurado" class="control-label">N° Jurado</label>
                         <select id="ipnumJu" asp-for="IpNumeroJurado" class="form-control">
@@ -104,7 +104,7 @@
                     </div>
                     <div class="form-group float-right">
                         <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal">Cerrar</button>
-                        <input type="submit" value="Create" class="btn btn-success"/>
+                        <input type="submit" id="idt" value="Create" class="btn btn-success"/>
                     </div>
                 </form>
             </div>

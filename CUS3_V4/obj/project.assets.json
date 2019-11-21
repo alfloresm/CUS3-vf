@@ -12625,20 +12625,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Alexandra\\.nuget\\packages\\": {}
+    "C:\\Users\\alumno.LABORATORIOS\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alexandra\\Source\\CUS3-vf\\CUS3_V4\\CUS3_V4.csproj",
+      "projectUniqueName": "C:\\Users\\alumno.LABORATORIOS\\source\\CUS3-vf\\CUS3_V4\\CUS3_V4.csproj",
       "projectName": "CUS3_V4",
-      "projectPath": "C:\\Users\\Alexandra\\Source\\CUS3-vf\\CUS3_V4\\CUS3_V4.csproj",
-      "packagesPath": "C:\\Users\\Alexandra\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alexandra\\Source\\CUS3-vf\\CUS3_V4\\obj\\",
+      "projectPath": "C:\\Users\\alumno.LABORATORIOS\\source\\CUS3-vf\\CUS3_V4\\CUS3_V4.csproj",
+      "packagesPath": "C:\\Users\\alumno.LABORATORIOS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\alumno.LABORATORIOS\\source\\CUS3-vf\\CUS3_V4\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Alexandra\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\alumno.LABORATORIOS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.1"
@@ -12687,7 +12694,6 @@
             "version": "[2.1.11, )"
           },
           "Microsoft.NETCore.App": {
-            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
@@ -12698,16 +12704,10 @@
           }
         },
         "imports": [
-          "net461",
-          "net462",
-          "net47",
-          "net471",
-          "net472",
-          "net48"
+          "net461"
         ],
         "assetTargetFallback": true,
-        "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "warn": true
       }
     }
   }

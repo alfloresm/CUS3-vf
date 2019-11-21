@@ -50,7 +50,7 @@ namespace CUS3_V4.Controllers
                 int v =Convert.ToInt16(TempData["tanda"]);
                 _context.Add(tPuntaje);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Create","TPuntajes", new { idt = v });
+                return RedirectToAction("Create","TPuntajes", new { idt = v});
                 //return Redirect("");
             }
             ViewData["FkVumtCod"] = new SelectList(_context.TUsuarioModalidadTanda, "PkVumtCod", "PkVumtCod", tPuntaje.FkVumtCod);
